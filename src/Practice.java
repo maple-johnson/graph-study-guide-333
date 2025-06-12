@@ -163,8 +163,21 @@ public class Practice
    * @param ending the ending vertex value
    * @return whether there exists a valid positive path from starting to ending
    */
-  public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending) {
-    return false;
+  public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending)
+  {
+    if (starting < 0 || ending < 0) return false;
+    Set<Integer> visited = new HashSet<>();
+    boolean check = false;
+    return positivePathExists(graph, starting, ending, visited, check);
+  }
+
+  public static boolean positivePathExists(Map<Integer, Set<Integer>> graph, int starting, int ending, Set<Integer> visited, boolean check)
+  {
+    if (starting == ending || check) return check = true;
+    if (starting < 0 || !graph.containsKey(starting) || visited.contains(starting)) return false;
+    visited.add(starting);
+    for (int neighbor : graph.get(starting)) check = positivePathExists(graph, neighbor, ending, visited, check);
+    return check;
   }
 
   /**
