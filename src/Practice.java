@@ -90,8 +90,21 @@ public class Practice
    * @param starting the starting vertex value
    * @return a sorted list of all reachable vertex values
    */
-  public static List<Integer> sortedReachable(Map<Integer, Set<Integer>> graph, int starting) {
-    return null;
+  public static List<Integer> sortedReachable(Map<Integer, Set<Integer>> graph, int starting) 
+  {
+    List<Integer> list = new ArrayList<>();
+    if (!graph.containsKey(starting)) return list;
+    list = sortedReachable(graph, starting, list);
+    Collections.sort(list);
+    return list;
+  }
+
+  public static List<Integer> sortedReachable(Map<Integer, Set<Integer>> graph, int starting, List<Integer> list)
+  {
+    if (list.contains(starting)) return list;
+    list.add(starting);
+    for (int neighbor : graph.get(starting)) list = sortedReachable(graph, neighbor, list);
+    return list;
   }
 
   /**
