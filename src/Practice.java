@@ -189,8 +189,21 @@ public class Practice
    * @param companyName the name of the company to check for employment
    * @return true if a person in the extended network works at the specified company, false otherwise
    */
-  public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) {
-    return false;
+  public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName) 
+  {
+    if (person == null) return false;
+    Set<Professional> visited = new HashSet<>();
+    boolean check = false;
+    return hasExtendedConnectionAtCompany(person, companyName, visited, check);
+  }
+
+  public static boolean hasExtendedConnectionAtCompany(Professional person, String companyName, Set<Professional> visited, boolean check)
+  {
+    if (companyName.equals(person.getCompany()) || check) return check = true;
+    if (person == null || visited.contains(person)) return false;
+    visited.add(person);
+    for (Professional connection : person.getConnections()) check = hasExtendedConnectionAtCompany(connection, companyName, visited, check);
+    return check;
   }
 
   /**
