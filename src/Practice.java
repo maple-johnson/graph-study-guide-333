@@ -121,8 +121,34 @@ public class Practice
    * @param v2 the target vertex
    * @return true if there is a two-way connection between v1 and v2, false otherwise
    */
-  public static <T> boolean twoWay(Vertex<T> v1, Vertex<T> v2) {
+  public static <T> boolean twoWay(Vertex<T> v1, Vertex<T> v2) 
+  {
+    if (v1 == null || v2 == null) return false;
+    if (v1.neighbors.contains(v2) && v2.neighbors.contains(v1)) return true;
+    if (v1 == v2) return true;
+    Set<Vertex<T>> visited  = new HashSet<>();
+    boolean check = false;
+    boolean firstWay = twoWay(v1, v2, visited, check);
+    boolean secondWay = twoWay(v2, v1, visited, check);
+    if (firstWay && secondWay) return true;
     return false;
+  }
+
+  public static <T> boolean twoWay(Vertex<T> v1, Vertex<T> v2, Set<Vertex<T>> visited, boolean check)
+  {
+    if (v1 == v2 || check) 
+    {
+      check = true;
+      return check;
+    }
+    else
+    {
+      if (visited.contains(v1)) return check;
+      visited.add(v1);
+      for (Vertex<T> newV : v1.neighbors) check = twoWay(newV, v2, visited, check);
+      return check;
+    }
+
   }
 
   /**
