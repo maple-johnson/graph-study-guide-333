@@ -1,8 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class Practice {
+public class Practice 
+{
 
   /**
    * Returns the count of vertices with odd values that can be reached from the given starting vertex.
@@ -178,7 +180,28 @@ public class Practice {
    * @param directions an array of [row, column] possible directions
    * @return an unsorted list of next moves
    */
-  public static List<int[]> nextMoves(char[][] board, int[] current, int[][] directions) {
-    return null;
+  public static List<int[]> nextMoves(char[][] board, int[] current, int[][] directions) 
+  {
+    List<int[]> possibleMoves = new ArrayList<>();
+
+    for (int[] direction : directions)
+    {
+      int newR = current[0] + direction[0];
+      int newC = current[1] + direction[1];
+
+      if (newR >= 0 &&
+          newR < board.length &&
+          newC >= 0 &&
+          newC < board[newR].length && 
+          board[newR][newC] != 'X')
+      {
+        possibleMoves.add(new int[]{newR, newC});
+      }
+
+    }
+    
+    return possibleMoves;
+
   }
+
 }
